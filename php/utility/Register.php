@@ -1,0 +1,72 @@
+<?php
+declare(strict_types=1);
+
+// VeabirdBeach SDK utility registration
+
+require_once __DIR__ . '/../core/UtilityType.php';
+require_once __DIR__ . '/Clean.php';
+require_once __DIR__ . '/Done.php';
+require_once __DIR__ . '/MakeError.php';
+require_once __DIR__ . '/FeatureAdd.php';
+require_once __DIR__ . '/FeatureHook.php';
+require_once __DIR__ . '/FeatureInit.php';
+require_once __DIR__ . '/Fetcher.php';
+require_once __DIR__ . '/MakeFetchDef.php';
+require_once __DIR__ . '/MakeContext.php';
+require_once __DIR__ . '/MakeOptions.php';
+require_once __DIR__ . '/MakeRequest.php';
+require_once __DIR__ . '/MakeResponse.php';
+require_once __DIR__ . '/MakeResult.php';
+require_once __DIR__ . '/MakePoint.php';
+require_once __DIR__ . '/MakeSpec.php';
+require_once __DIR__ . '/MakeUrl.php';
+require_once __DIR__ . '/Param.php';
+require_once __DIR__ . '/PrepareAuth.php';
+require_once __DIR__ . '/PrepareBody.php';
+require_once __DIR__ . '/Graphql.php';
+require_once __DIR__ . '/PrepareHeaders.php';
+require_once __DIR__ . '/PrepareMethod.php';
+require_once __DIR__ . '/PrepareParams.php';
+require_once __DIR__ . '/PreparePath.php';
+require_once __DIR__ . '/PrepareQuery.php';
+require_once __DIR__ . '/ResultBasic.php';
+require_once __DIR__ . '/ResultBody.php';
+require_once __DIR__ . '/ResultHeaders.php';
+require_once __DIR__ . '/TransformRequest.php';
+require_once __DIR__ . '/TransformResponse.php';
+
+VeabirdBeachUtility::setRegistrar(function (VeabirdBeachUtility $u): void {
+    $u->clean = [VeabirdBeachClean::class, 'call'];
+    $u->clean_add = [VeabirdBeachClean::class, 'add'];
+    $u->clean_explain = [VeabirdBeachDone::class, 'clean_explain'];
+    $u->done = [VeabirdBeachDone::class, 'call'];
+    $u->make_error = [VeabirdBeachMakeError::class, 'call'];
+    $u->feature_add = [VeabirdBeachFeatureAdd::class, 'call'];
+    $u->feature_hook = [VeabirdBeachFeatureHook::class, 'call'];
+    $u->feature_init = [VeabirdBeachFeatureInit::class, 'call'];
+    $u->fetcher = [VeabirdBeachFetcher::class, 'call'];
+    $u->make_fetch_def = [VeabirdBeachMakeFetchDef::class, 'call'];
+    $u->make_context = [VeabirdBeachMakeContext::class, 'call'];
+    $u->make_options = [VeabirdBeachMakeOptions::class, 'call'];
+    $u->make_request = [VeabirdBeachMakeRequest::class, 'call'];
+    $u->make_response = [VeabirdBeachMakeResponse::class, 'call'];
+    $u->make_result = [VeabirdBeachMakeResult::class, 'call'];
+    $u->make_point = [VeabirdBeachMakePoint::class, 'call'];
+    $u->make_spec = [VeabirdBeachMakeSpec::class, 'call'];
+    $u->make_url = [VeabirdBeachMakeUrl::class, 'call'];
+    $u->param = [VeabirdBeachParam::class, 'call'];
+    $u->prepare_auth = [VeabirdBeachPrepareAuth::class, 'call'];
+    $u->prepare_body = [VeabirdBeachPrepareBody::class, 'call'];
+    $u->prepare_headers = [VeabirdBeachPrepareHeaders::class, 'call'];
+    $u->prepare_method = [VeabirdBeachPrepareMethod::class, 'call'];
+    $u->prepare_params = [VeabirdBeachPrepareParams::class, 'call'];
+    $u->prepare_path = [VeabirdBeachPreparePath::class, 'call'];
+    $u->prepare_query = [VeabirdBeachPrepareQuery::class, 'call'];
+    $u->graphql_body = [VeabirdBeachGraphql::class, 'body'];
+    $u->graphql_errors = [VeabirdBeachGraphql::class, 'errors'];
+    $u->result_basic = [VeabirdBeachResultBasic::class, 'call'];
+    $u->result_body = [VeabirdBeachResultBody::class, 'call'];
+    $u->result_headers = [VeabirdBeachResultHeaders::class, 'call'];
+    $u->transform_request = [VeabirdBeachTransformRequest::class, 'call'];
+    $u->transform_response = [VeabirdBeachTransformResponse::class, 'call'];
+});

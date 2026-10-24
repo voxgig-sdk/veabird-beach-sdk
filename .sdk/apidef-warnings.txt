@@ -1,0 +1,24 @@
+{
+  point: "warning"
+  note: "Points GET /beach/conditions and GET /ski/conditions on entity=condition op=load have the same selector (exist: resort), so only GET /beach/conditions is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "condition"
+  op: "load"
+  points: [
+    "GET /beach/conditions"
+    "GET /ski/conditions"
+  ]
+
+}
+
+
+{
+  point: "warning"
+  note: "Points GET /beach/resorts and GET /ski/resorts on entity=resort op=load have the same selector (exist: none), so only GET /beach/resorts is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "resort"
+  op: "load"
+  points: [
+    "GET /beach/resorts"
+    "GET /ski/resorts"
+  ]
+
+}

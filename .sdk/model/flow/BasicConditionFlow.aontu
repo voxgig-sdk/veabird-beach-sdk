@@ -1,0 +1,28 @@
+# BasicConditionFlow
+
+main: kit: flow: BasicConditionFlow:
+{
+  entity: "condition",
+  kind: "basic",
+  name: "BasicConditionFlow",
+  step: [
+    {
+      i: {
+        ref: "condition_ref01",
+        srcdatavar: "condition_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-condition_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicConditionFlow"
+}

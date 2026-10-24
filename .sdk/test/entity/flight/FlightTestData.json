@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "flight": {
+      "FLIGHT00": {
+        "id": "FLIGHT00"
+      },
+      "FLIGHT01": {
+        "id": "FLIGHT01"
+      },
+      "FLIGHT02": {
+        "id": "FLIGHT02"
+      }
+    }
+  },
+  "new": {
+    "flight": {
+      "flight_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /trip/flights": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

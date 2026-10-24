@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "hurricane": {
+      "HURRICANE00": {
+        "id": "HURRICANE00"
+      },
+      "HURRICANE01": {
+        "id": "HURRICANE01"
+      },
+      "HURRICANE02": {
+        "id": "HURRICANE02"
+      }
+    }
+  },
+  "new": {
+    "hurricane": {
+      "hurricane_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/hurricanes": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

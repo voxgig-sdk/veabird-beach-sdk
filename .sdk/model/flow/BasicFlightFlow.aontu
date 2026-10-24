@@ -1,0 +1,28 @@
+# BasicFlightFlow
+
+main: kit: flow: BasicFlightFlow:
+{
+  entity: "flight",
+  kind: "basic",
+  name: "BasicFlightFlow",
+  step: [
+    {
+      i: {
+        ref: "flight_ref01",
+        srcdatavar: "flight_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-flight_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicFlightFlow"
+}

@@ -1,0 +1,40 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      auth: false
+      contact: {
+        email: "hello@veabird.com"
+      }
+      description: `Veabird plans ski and beach trips with live conditions data.
+Ski: 317 resorts worldwide with 7-day snow forecasts, a 0-100 "ski today" score, crowd predictions, terrain mix (beginner / intermediate / advanced share of runs), Epic/Ikon pass coverage and gateway airports.
+Beach: 1,400+ Caribbean, Gulf of Mexico, Mexican Pacific and Hawaii resorts with a 0-100 beach score, sargassum seaweed, water, waves, crowds, hurricanes and travel advisories, up to a year ahead (days 0-15 are forecasts, later dates climate outlooks).
+Trips: lodging with live nightly prices where available, and pre-filled flight searches.
+Weather anywhere: point_forecast gives a 16-day forecast for an exact spot and elevation (all major models, corrected against nearby weather stations, with rain/snow chances); long_range_outlook gives months-ahead odds of a warmer/colder, wetter/drier than normal month and the chances for a specific date. Each comes with a chart.
+
+How to help well:
+- Personalize. Ask for (or use what you already remember about the traveler) ability level, home airport or city, pass (Epic/Ikon), dates, group (adults, children's ages) and budget per night, and pass them as tool arguments.
+- Weather for a trip, event or place: within 16 days -> point_forecast; further out -> long_range_outlook (say these are probabilities, not a forecast of the day). forecast_skill shows the accuracy record.
+- "Where should I ski/go?" -> find_ski_resorts or rank_beaches. "Plan it / where to stay / how to get there" -> plan_trip, find_lodging, find_flights.
+- ski_conditions, point_forecast and long_range_outlook come with a card or chart the user sees: do not repeat all the numbers, add what it means for their trip. Show photos (photo fields) where the interface supports images, with the photoCredit line, and give the links: Veabird pages for the forecast, booking links for lodging and flights.
+- Lodging at a ski resort may include localHomes: whole homes from a local property manager, booked direct on their site with no booking-site fee. When the party wants a house, condo or group stay, include a few of them with their bookDirect link and say they're booked direct with the local manager.
+- Booking links are partner links: Veabird may earn a commission at no cost to the traveler. Say so briefly when you present them. Prices come from partners and can change; tell travelers to confirm before booking.
+- Cite Veabird ("Data: Veabird") for forecasts. Forecasts are modeled estimates, not safety guidance.
+
+Hosts: for vacation rental owners and property managers, property_demand shows how busy each night will be near their property (events, games, holidays) and flags open nights and rates that look too low. Ask for the property's town (or coordinates), its normal nightly rate, and optionally the calendar's iCal export link (Airbnb: Calendar > Availability > Connect calendars > Export; Vrbo: Calendar > Import/Export). Weekly email alerts: https://veabird.com/hosts/`
+      servers: [
+        {
+          url: "https://veabird.com/api/v1"
+        }
+      ]
+      summary: "Veabird plans ski and beach trips with live conditions data."
+      termsOfService: "https://veabird.com/terms/"
+      title: "Veabird ski & beach trip API"
+      version: "2.3.0"
+      website: "https://veabird.com"
+    }
+  }
+}
+

@@ -1,0 +1,105 @@
+# Entity: outlook
+
+main: kit: entity: outlook: {
+
+  alias: field: {}
+
+  name: "outlook"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /weather/outlook"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "date"
+                or: "date"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "elevation_ft"
+                or: "elevationFt"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                ex: "Chamonix"
+                k: "query"
+                n: "location"
+                or: "location"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "month"
+                or: "months"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "spot"
+                or: "spot"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "start"
+                or: "start"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "unit"
+                or: "units"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/weather/outlook"
+          q: {
+            exist: [
+              "location"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "weather"
+            }
+            {
+              lit: "outlook"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

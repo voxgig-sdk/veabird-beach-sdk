@@ -1,0 +1,28 @@
+# BasicTideFlow
+
+main: kit: flow: BasicTideFlow:
+{
+  entity: "tide",
+  kind: "basic",
+  name: "BasicTideFlow",
+  step: [
+    {
+      i: {
+        ref: "tide_ref01",
+        srcdatavar: "tide_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-tide_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicTideFlow"
+}

@@ -1,0 +1,123 @@
+# Entity: lodging
+
+main: kit: entity: lodging: {
+
+  alias: field: {}
+
+  name: "lodging"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /trip/lodging"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "adult"
+                or: "adults"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: "2027-01-15"
+                k: "query"
+                n: "checkin"
+                or: "checkin"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                ex: "2027-01-18"
+                k: "query"
+                n: "checkout"
+                or: "checkout"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "children_age"
+                or: "childrenAges"
+                r: false
+                t: "`$ARRAY`"
+              }
+              {
+                k: "query"
+                n: "limit"
+                or: "limit"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "max_price_per_night"
+                or: "maxPricePerNight"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                ex: "Breckenridge"
+                k: "query"
+                n: "near"
+                or: "near"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "radius_mile"
+                or: "radiusMiles"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                k: "query"
+                n: "room"
+                or: "rooms"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/trip/lodging"
+          q: {
+            exist: [
+              "checkin"
+              "checkout"
+              "near"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "trip"
+            }
+            {
+              lit: "lodging"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

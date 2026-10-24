@@ -1,0 +1,28 @@
+# BasicSargassumFlow
+
+main: kit: flow: BasicSargassumFlow:
+{
+  entity: "sargassum",
+  kind: "basic",
+  name: "BasicSargassumFlow",
+  step: [
+    {
+      i: {
+        ref: "sargassum_ref01",
+        srcdatavar: "sargassum_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-sargassum_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSargassumFlow"
+}

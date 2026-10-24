@@ -1,0 +1,127 @@
+# Entity: match
+
+main: kit: entity: match: {
+
+  alias: field: {}
+
+  name: "match"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /ski/match"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "ability"
+                or: "ability"
+                r: false
+                t: "`$ARRAY`"
+              }
+              {
+                k: "query"
+                n: "area"
+                or: "area"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "budget"
+                or: "budget"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "children_age"
+                or: "childrenAges"
+                r: false
+                t: "`$ARRAY`"
+              }
+              {
+                k: "query"
+                n: "depart"
+                or: "depart"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "from"
+                or: "from"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "limit"
+                or: "limit"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "max_drive_hour"
+                or: "maxDriveHours"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                k: "query"
+                n: "night"
+                or: "nights"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "pass"
+                or: "pass"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "travel"
+                or: "travel"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/ski/match"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "ski"
+            }
+            {
+              lit: "match"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

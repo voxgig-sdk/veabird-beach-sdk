@@ -1,0 +1,32 @@
+{
+  "existing": {
+    "condition": {
+      "CONDITION00": {
+        "id": "CONDITION00"
+      },
+      "CONDITION01": {
+        "id": "CONDITION01"
+      },
+      "CONDITION02": {
+        "id": "CONDITION02"
+      }
+    }
+  },
+  "new": {
+    "condition": {
+      "condition_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/conditions": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /ski/conditions": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

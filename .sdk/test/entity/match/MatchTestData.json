@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "match": {
+      "MATCH00": {
+        "id": "MATCH00"
+      },
+      "MATCH01": {
+        "id": "MATCH01"
+      },
+      "MATCH02": {
+        "id": "MATCH02"
+      }
+    }
+  },
+  "new": {
+    "match": {
+      "match_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /ski/match": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

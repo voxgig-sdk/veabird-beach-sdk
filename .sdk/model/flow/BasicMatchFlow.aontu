@@ -1,0 +1,28 @@
+# BasicMatchFlow
+
+main: kit: flow: BasicMatchFlow:
+{
+  entity: "match",
+  kind: "basic",
+  name: "BasicMatchFlow",
+  step: [
+    {
+      i: {
+        ref: "match_ref01",
+        srcdatavar: "match_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-match_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicMatchFlow"
+}

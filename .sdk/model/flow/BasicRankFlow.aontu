@@ -1,0 +1,28 @@
+# BasicRankFlow
+
+main: kit: flow: BasicRankFlow:
+{
+  entity: "rank",
+  kind: "basic",
+  name: "BasicRankFlow",
+  step: [
+    {
+      i: {
+        ref: "rank_ref01",
+        srcdatavar: "rank_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-rank_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicRankFlow"
+}

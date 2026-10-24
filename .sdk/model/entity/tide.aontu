@@ -1,0 +1,70 @@
+# Entity: tide
+
+main: kit: entity: tide: {
+
+  alias: field: {}
+
+  name: "tide"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /beach/tides"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "day"
+                or: "days"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                ex: "Tulum"
+                k: "query"
+                n: "resort"
+                or: "resort"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/beach/tides"
+          q: {
+            exist: [
+              "resort"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "beach"
+            }
+            {
+              lit: "tides"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

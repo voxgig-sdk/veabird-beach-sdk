@@ -1,0 +1,28 @@
+# BasicBetterNearbyFlow
+
+main: kit: flow: BasicBetterNearbyFlow:
+{
+  entity: "better_nearby",
+  kind: "basic",
+  name: "BasicBetterNearbyFlow",
+  step: [
+    {
+      i: {
+        ref: "better_nearby_ref01",
+        srcdatavar: "better_nearby_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-better_nearby_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicBetterNearbyFlow"
+}

@@ -1,0 +1,28 @@
+# BasicLodgingFlow
+
+main: kit: flow: BasicLodgingFlow:
+{
+  entity: "lodging",
+  kind: "basic",
+  name: "BasicLodgingFlow",
+  step: [
+    {
+      i: {
+        ref: "lodging_ref01",
+        srcdatavar: "lodging_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-lodging_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicLodgingFlow"
+}

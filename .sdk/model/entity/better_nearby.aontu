@@ -1,0 +1,77 @@
+# Entity: better_nearby
+
+main: kit: entity: better_nearby: {
+
+  alias: field: {}
+
+  name: "better_nearby"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /beach/better-nearby"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "date"
+                or: "date"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "radius_mile"
+                or: "radiusMiles"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                ex: "Tulum"
+                k: "query"
+                n: "resort"
+                or: "resort"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/beach/better-nearby"
+          q: {
+            exist: [
+              "resort"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "beach"
+            }
+            {
+              lit: "better-nearby"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

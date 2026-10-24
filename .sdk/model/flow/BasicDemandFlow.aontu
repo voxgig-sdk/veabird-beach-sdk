@@ -1,0 +1,28 @@
+# BasicDemandFlow
+
+main: kit: flow: BasicDemandFlow:
+{
+  entity: "demand",
+  kind: "basic",
+  name: "BasicDemandFlow",
+  step: [
+    {
+      i: {
+        ref: "demand_ref01",
+        srcdatavar: "demand_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-demand_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicDemandFlow"
+}

@@ -1,0 +1,28 @@
+# BasicHurricaneFlow
+
+main: kit: flow: BasicHurricaneFlow:
+{
+  entity: "hurricane",
+  kind: "basic",
+  name: "BasicHurricaneFlow",
+  step: [
+    {
+      i: {
+        ref: "hurricane_ref01",
+        srcdatavar: "hurricane_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-hurricane_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicHurricaneFlow"
+}

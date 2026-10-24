@@ -1,0 +1,70 @@
+# Entity: sargassum
+
+main: kit: entity: sargassum: {
+
+  alias: field: {}
+
+  name: "sargassum"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /beach/sargassum"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "Tulum"
+                k: "query"
+                n: "resort"
+                or: "resort"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "week"
+                or: "weeks"
+                r: false
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/beach/sargassum"
+          q: {
+            exist: [
+              "resort"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "beach"
+            }
+            {
+              lit: "sargassum"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

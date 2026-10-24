@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "skill": {
+      "SKILL00": {
+        "id": "SKILL00"
+      },
+      "SKILL01": {
+        "id": "SKILL01"
+      },
+      "SKILL02": {
+        "id": "SKILL02"
+      }
+    }
+  },
+  "new": {
+    "skill": {
+      "skill_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /weather/skill": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

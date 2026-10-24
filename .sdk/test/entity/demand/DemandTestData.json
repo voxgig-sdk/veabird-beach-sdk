@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "demand": {
+      "DEMAND00": {
+        "id": "DEMAND00"
+      },
+      "DEMAND01": {
+        "id": "DEMAND01"
+      },
+      "DEMAND02": {
+        "id": "DEMAND02"
+      }
+    }
+  },
+  "new": {
+    "demand": {
+      "demand_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /host/demand": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

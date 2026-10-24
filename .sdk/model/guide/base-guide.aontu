@@ -1,0 +1,119 @@
+# Generated from the API definition and overwritten on every build: do not
+# edit this file. Put customizations in the guide entry file, which includes
+# this one and overrides its defaults:
+#   guide.aontu
+
+guide: {
+  metrics: count: entity: 17
+  metrics: count: path: 19
+  metrics: count: method: 19
+
+  entity: advisory: {
+    path: "/beach/advisory": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: better_nearby: {
+    path: "/beach/better-nearby": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: condition: {
+    path: "/beach/conditions": {
+      op: load: method: *GET
+    }
+    path: "/ski/conditions": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: demand: {
+    path: "/host/demand": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: flight: {
+    path: "/trip/flights": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: forecast: {
+    path: "/weather/forecast": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: hurricane: {
+    path: "/beach/hurricanes": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: lodging: {
+    path: "/trip/lodging": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: match: {
+    path: "/ski/match": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: model_skill: {
+    path: "/beach/model-skill": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: outlook: {
+    path: "/weather/outlook": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: plan: {
+    path: "/trip/plan": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: rank: {
+    path: "/beach/rank": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: resort: {
+    path: "/beach/resorts": {
+      op: load: method: *GET
+    }
+    path: "/ski/resorts": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: sargassum: {
+    path: "/beach/sargassum": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: skill: {
+    path: "/weather/skill": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: tide: {
+    path: "/beach/tides": {
+      op: load: method: *GET
+    }
+  }
+
+}

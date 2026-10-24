@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "lodging": {
+      "LODGING00": {
+        "id": "LODGING00"
+      },
+      "LODGING01": {
+        "id": "LODGING01"
+      },
+      "LODGING02": {
+        "id": "LODGING02"
+      }
+    }
+  },
+  "new": {
+    "lodging": {
+      "lodging_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /trip/lodging": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

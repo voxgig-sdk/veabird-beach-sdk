@@ -1,0 +1,114 @@
+# Entity: plan
+
+main: kit: entity: plan: {
+
+  alias: field: {}
+
+  name: "plan"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /trip/plan"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "adult"
+                or: "adults"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "children_age"
+                or: "childrenAges"
+                r: false
+                t: "`$ARRAY`"
+              }
+              {
+                ex: "2027-01-15"
+                k: "query"
+                n: "depart"
+                or: "depart"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "from"
+                or: "from"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "kind"
+                or: "kind"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "max_price_per_night"
+                or: "maxPricePerNight"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                ex: "Breckenridge"
+                k: "query"
+                n: "resort"
+                or: "resort"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "return"
+                or: "return"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/trip/plan"
+          q: {
+            exist: [
+              "depart"
+              "resort"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "trip"
+            }
+            {
+              lit: "plan"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

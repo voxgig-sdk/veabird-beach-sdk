@@ -1,0 +1,28 @@
+# BasicPlanFlow
+
+main: kit: flow: BasicPlanFlow:
+{
+  entity: "plan",
+  kind: "basic",
+  name: "BasicPlanFlow",
+  step: [
+    {
+      i: {
+        ref: "plan_ref01",
+        srcdatavar: "plan_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-plan_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPlanFlow"
+}

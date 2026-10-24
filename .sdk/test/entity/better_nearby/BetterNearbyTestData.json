@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "better_nearby": {
+      "BETTER_NEARBY00": {
+        "id": "BETTER_NEARBY00"
+      },
+      "BETTER_NEARBY01": {
+        "id": "BETTER_NEARBY01"
+      },
+      "BETTER_NEARBY02": {
+        "id": "BETTER_NEARBY02"
+      }
+    }
+  },
+  "new": {
+    "better_nearby": {
+      "better_nearby_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/better-nearby": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

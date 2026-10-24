@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "model_skill": {
+      "MODEL_SKILL00": {
+        "id": "MODEL_SKILL00"
+      },
+      "MODEL_SKILL01": {
+        "id": "MODEL_SKILL01"
+      },
+      "MODEL_SKILL02": {
+        "id": "MODEL_SKILL02"
+      }
+    }
+  },
+  "new": {
+    "model_skill": {
+      "model_skill_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/model-skill": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

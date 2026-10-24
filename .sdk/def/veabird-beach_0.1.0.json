@@ -1,0 +1,1289 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Veabird ski & beach trip API",
+    "version": "2.3.0",
+    "description": "Veabird plans ski and beach trips with live conditions data.\nSki: 317 resorts worldwide with 7-day snow forecasts, a 0-100 \"ski today\" score, crowd predictions, terrain mix (beginner / intermediate / advanced share of runs), Epic/Ikon pass coverage and gateway airports.\nBeach: 1,400+ Caribbean, Gulf of Mexico, Mexican Pacific and Hawaii resorts with a 0-100 beach score, sargassum seaweed, water, waves, crowds, hurricanes and travel advisories, up to a year ahead (days 0-15 are forecasts, later dates climate outlooks).\nTrips: lodging with live nightly prices where available, and pre-filled flight searches.\nWeather anywhere: point_forecast gives a 16-day forecast for an exact spot and elevation (all major models, corrected against nearby weather stations, with rain/snow chances); long_range_outlook gives months-ahead odds of a warmer/colder, wetter/drier than normal month and the chances for a specific date. Each comes with a chart.\n\nHow to help well:\n- Personalize. Ask for (or use what you already remember about the traveler) ability level, home airport or city, pass (Epic/Ikon), dates, group (adults, children's ages) and budget per night, and pass them as tool arguments.\n- Weather for a trip, event or place: within 16 days -> point_forecast; further out -> long_range_outlook (say these are probabilities, not a forecast of the day). forecast_skill shows the accuracy record.\n- \"Where should I ski/go?\" -> find_ski_resorts or rank_beaches. \"Plan it / where to stay / how to get there\" -> plan_trip, find_lodging, find_flights.\n- ski_conditions, point_forecast and long_range_outlook come with a card or chart the user sees: do not repeat all the numbers, add what it means for their trip. Show photos (photo fields) where the interface supports images, with the photoCredit line, and give the links: Veabird pages for the forecast, booking links for lodging and flights.\n- Lodging at a ski resort may include localHomes: whole homes from a local property manager, booked direct on their site with no booking-site fee. When the party wants a house, condo or group stay, include a few of them with their bookDirect link and say they're booked direct with the local manager.\n- Booking links are partner links: Veabird may earn a commission at no cost to the traveler. Say so briefly when you present them. Prices come from partners and can change; tell travelers to confirm before booking.\n- Cite Veabird (\"Data: Veabird\") for forecasts. Forecasts are modeled estimates, not safety guidance.\n\nHosts: for vacation rental owners and property managers, property_demand shows how busy each night will be near their property (events, games, holidays) and flags open nights and rates that look too low. Ask for the property's town (or coordinates), its normal nightly rate, and optionally the calendar's iCal export link (Airbnb: Calendar > Availability > Connect calendars > Export; Vrbo: Calendar > Import/Export). Weekly email alerts: https://veabird.com/hosts/",
+    "termsOfService": "https://veabird.com/terms/",
+    "contact": {
+      "email": "hello@veabird.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://veabird.com/api/v1"
+    }
+  ],
+  "paths": {
+    "/ski/match": {
+      "get": {
+        "operationId": "find_ski_resorts",
+        "summary": "Find the best ski resorts for a traveler",
+        "description": "Ranks ski resorts for one traveler or group: terrain that fits their ability (beginner/intermediate/advanced/expert, or a mixed group), snow and crowds for their dates, travel from their home airport or city (drive or fly), and their Epic/Ikon pass. Returns the reasons for each pick plus lodging, flight and rental links. Use for 'where should I ski' questions.",
+        "parameters": [
+          {
+            "name": "ability",
+            "in": "query",
+            "required": false,
+            "description": "Ability of each skier or the group, e.g. ['intermediate'] or ['advanced','beginner'].",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "beginner",
+                  "intermediate",
+                  "advanced",
+                  "expert"
+                ]
+              }
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "Traveler's home airport code (e.g. DFW), city (e.g. 'Dallas') or 'lat,lon'.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "travel",
+            "in": "query",
+            "required": false,
+            "description": "How they want to get there (default either).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "drive",
+                "fly",
+                "either"
+              ]
+            }
+          },
+          {
+            "name": "maxDriveHours",
+            "in": "query",
+            "required": false,
+            "description": "Longest acceptable drive (default 5).",
+            "schema": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 16
+            }
+          },
+          {
+            "name": "pass",
+            "in": "query",
+            "required": false,
+            "description": "Season pass they hold.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "epic",
+                "ikon",
+                "none"
+              ]
+            }
+          },
+          {
+            "name": "depart",
+            "in": "query",
+            "required": false,
+            "description": "First ski day, YYYY-MM-DD (default today).",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "nights",
+            "in": "query",
+            "required": false,
+            "description": "Trip length in nights (default 3).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 21
+            }
+          },
+          {
+            "name": "childrenAges",
+            "in": "query",
+            "required": false,
+            "description": "Ages of children traveling, e.g. [6, 9].",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 17
+              },
+              "maxItems": 8
+            }
+          },
+          {
+            "name": "budget",
+            "in": "query",
+            "required": false,
+            "description": "Value weights pass coverage and driving more heavily.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "value",
+                "mid",
+                "luxury"
+              ]
+            }
+          },
+          {
+            "name": "area",
+            "in": "query",
+            "required": false,
+            "description": "Limit to a country, state or range, e.g. 'colorado', 'utah', 'alps', 'japan', 'US'.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "How many resorts (default 5).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ski/conditions": {
+      "get": {
+        "operationId": "ski_conditions",
+        "summary": "Snow conditions at a ski resort",
+        "description": "Today's 0-100 'ski today' score (fresh snow, base depth, weather, crowds), the next 7 days of summit snowfall and temperature, crowd outlook, terrain mix, passes and gateway airport for one ski resort.",
+        "parameters": [
+          {
+            "name": "resort",
+            "in": "query",
+            "required": true,
+            "description": "Ski resort name or id, e.g. 'Breckenridge'.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Breckenridge"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ski/resorts": {
+      "get": {
+        "operationId": "search_ski_resorts",
+        "summary": "Search ski resorts",
+        "description": "Search Veabird's 317 ski resorts by name, country, state or range, optionally only those on a pass. Returns ids, terrain mix, passes, gateway airports and forecast links.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "description": "e.g. 'utah', 'alps', 'whistler', 'japan'",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pass",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "epic",
+                "ikon"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/resorts": {
+      "get": {
+        "operationId": "search_beach_resorts",
+        "summary": "Search beach resorts",
+        "description": "Search Veabird's 1,400+ beach resorts (Caribbean, Gulf of Mexico, Mexico's Pacific coast, Hawaii) by name, town, island, region or country. Returns ids, today's headline conditions, photos and page links.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "description": "e.g. 'tulum', 'punta cana', 'barbados'",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/conditions": {
+      "get": {
+        "operationId": "beach_conditions",
+        "summary": "Conditions at a beach resort on a date",
+        "description": "Full conditions for one beach resort on one date: 0-100 beach score with per-metric scores, sargassum, weather, water temperature, waves and rip currents, UV, crowds, hurricane risk, holidays. For today, also live conditions and alerts. Days 0-15 are forecasts, later dates climate outlooks.",
+        "parameters": [
+          {
+            "name": "resort",
+            "in": "query",
+            "required": true,
+            "description": "Resort id or name",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Tulum"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "description": "YYYY-MM-DD, today to ~365 days out (default today).",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/rank": {
+      "get": {
+        "operationId": "rank_beaches",
+        "summary": "Best beach resorts for a date",
+        "description": "Rank beach resorts by 0-100 beach score for a date, optionally within a region, island or country, or a radius around a resort. With `from`, also gives each resort's airports and a flight search. Use for 'where should I go to the beach' questions.",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "description": "YYYY-MM-DD (default today). Beyond 16 days needs a narrow query or near.",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "description": "Region, island, town or country, e.g. 'mexico', 'bahamas', 'punta cana'.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "near",
+            "in": "query",
+            "required": false,
+            "description": "Resort id or name to rank around.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "radiusMiles",
+            "in": "query",
+            "required": false,
+            "description": "With near: max distance (default 300).",
+            "schema": {
+              "type": "number",
+              "minimum": 10,
+              "maximum": 2000
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "Traveler's home airport code (e.g. DFW), city (e.g. 'Dallas') or 'lat,lon'.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Default 8.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/better-nearby": {
+      "get": {
+        "operationId": "better_nearby_beaches",
+        "summary": "Better nearby beaches",
+        "description": "For a beach resort and date (within 16 days), nearby resorts with a meaningfully higher beach score: swap suggestions when sargassum or weather is bad.",
+        "parameters": [
+          {
+            "name": "resort",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Tulum"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "radiusMiles",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 25,
+              "maximum": 1000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/sargassum": {
+      "get": {
+        "operationId": "sargassum_forecast",
+        "summary": "Sargassum forecast for a beach resort",
+        "description": "Sargassum (seaweed) outlook for a beach resort: the next 16 days in detail plus a weekly outlook for coming months, barrier and cleanup programs, and the model's source and held-out skill.",
+        "parameters": [
+          {
+            "name": "resort",
+            "in": "query",
+            "required": true,
+            "description": "Resort id or name",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Tulum"
+          },
+          {
+            "name": "weeks",
+            "in": "query",
+            "required": false,
+            "description": "Weekly outlook length (default 12)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 52
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/hurricanes": {
+      "get": {
+        "operationId": "hurricane_threats",
+        "summary": "Active hurricanes and threatened resorts",
+        "description": "Active Atlantic tropical storms and hurricanes (NOAA NHC) with position, intensity and track, and which Veabird beach resorts are threatened.",
+        "parameters": [
+          {
+            "name": "resort",
+            "in": "query",
+            "required": false,
+            "description": "Optional resort to check",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/advisory": {
+      "get": {
+        "operationId": "travel_advisory",
+        "summary": "Travel advisory (crime and safety)",
+        "description": "US State Department travel advisory level (1-4) and summary for a country or a beach resort's country, plus Veabird's local safety notes.",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "description": "Country: ISO2 code (MX, JM, DO) or name (Mexico)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/tides": {
+      "get": {
+        "operationId": "tides",
+        "summary": "Tide times",
+        "description": "High and low tide times and heights at a beach resort for the next days (Open-Meteo sea level model, heights relative to mean sea level).",
+        "parameters": [
+          {
+            "name": "resort",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Tulum"
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beach/model-skill": {
+      "get": {
+        "operationId": "sargassum_model_skill",
+        "summary": "Sargassum model accuracy",
+        "description": "How well Veabird's sargassum model performs on held-out years (AUC, Brier score, calibration) versus baselines.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weather/forecast": {
+      "get": {
+        "operationId": "point_forecast",
+        "summary": "Weather forecast for an exact spot",
+        "description": "Day-by-day weather (up to 16 days) for an exact location and elevation, more accurate than a single-model app: every major model (ECMWF, NOAA NBM/GFS/HRRR, UK Met Office, ICON, GEM, Meteo-France, JMA) run at the spot's own elevation, corrected for each model's recent error at the nearest weather stations, blended by recent accuracy, with rain, snow and temperature-range probabilities from 82 ensemble members. Each day also shows what a typical weather app says, for comparison.",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "query",
+            "required": true,
+            "description": "'lat,lon' (most precise), a place ('Moab, UT', 'Chamonix'), or a Veabird ski resort name.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Chamonix"
+          },
+          {
+            "name": "spot",
+            "in": "query",
+            "required": false,
+            "description": "At a ski resort: the base (default) or the summit.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base",
+                "summit"
+              ]
+            }
+          },
+          {
+            "name": "elevationFt",
+            "in": "query",
+            "required": false,
+            "description": "Elevation of the exact spot in feet, if known (else from a 90 m terrain map).",
+            "schema": {
+              "type": "number",
+              "minimum": -1500,
+              "maximum": 29000
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "description": "Days ahead (default 10).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "us (°F, in, mph; default) or metric.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "us",
+                "metric"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weather/outlook": {
+      "get": {
+        "operationId": "long_range_outlook",
+        "summary": "Long-range weather outlook (months ahead)",
+        "description": "Weather months ahead for an exact location, as probabilities: for each month the chance of a below-, near- or above-normal temperature and precipitation (from ECMWF's SEAS5 seasonal forecast and, in the US, NOAA CPC's official outlook, over a 35-year local climate record with the warming trend), the expected and normal highs and lows, wet and snow days; for a specific date, the likely high and low and the chance of rain, snow, a freezing night or a hot day. Also the next 6 weeks as weekly odds.",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "query",
+            "required": true,
+            "description": "'lat,lon' (most precise), a place ('Napa, CA', 'Kyoto'), or a Veabird ski resort name.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Chamonix"
+          },
+          {
+            "name": "spot",
+            "in": "query",
+            "required": false,
+            "description": "At a ski resort: the base (default) or the summit.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base",
+                "summit"
+              ]
+            }
+          },
+          {
+            "name": "elevationFt",
+            "in": "query",
+            "required": false,
+            "description": "Elevation of the exact spot in feet, if known.",
+            "schema": {
+              "type": "number",
+              "minimum": -1500,
+              "maximum": 29000
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "description": "A specific date within the next 12 months, YYYY-MM-DD (a wedding, a race, a trip).",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "description": "First month, YYYY-MM (default this month, or the date's month).",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}$"
+            }
+          },
+          {
+            "name": "months",
+            "in": "query",
+            "required": false,
+            "description": "How many months (default 6).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            }
+          },
+          {
+            "name": "units",
+            "in": "query",
+            "required": false,
+            "description": "us (°F, in; default) or metric.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "us",
+                "metric"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weather/skill": {
+      "get": {
+        "operationId": "forecast_skill",
+        "summary": "Forecast accuracy track record",
+        "description": "How accurate Veabird's point forecast has been against weather-station measurements, compared with the single-model forecast typical weather apps show: average error of the daily high and low by days ahead, and the Brier score of the rain/snow chance, at a fixed panel of stations (mountains, coasts, inland), scored without using the station being scored.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trip/plan": {
+      "get": {
+        "operationId": "plan_trip",
+        "summary": "Plan a ski or beach trip",
+        "description": "Everything to book one trip to a ski or beach resort: conditions for the dates, places to stay (live nightly prices with photos where available, plus rental and hotel searches), flights from the traveler's airport to the best gateway, and extras (lift tickets, ski rentals, tours, car hire, insurance).",
+        "parameters": [
+          {
+            "name": "resort",
+            "in": "query",
+            "required": true,
+            "description": "Ski or beach resort name or id.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Breckenridge"
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "description": "Only if the name is ambiguous.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ski",
+                "beach"
+              ]
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "Traveler's home airport code (e.g. DFW), city (e.g. 'Dallas') or 'lat,lon'.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "depart",
+            "in": "query",
+            "required": true,
+            "description": "Arrival date, YYYY-MM-DD.",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "example": "2027-01-15"
+          },
+          {
+            "name": "return",
+            "in": "query",
+            "required": false,
+            "description": "Departure date (default 4 nights later).",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "adults",
+            "in": "query",
+            "required": false,
+            "description": "Adults (default 2).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16
+            }
+          },
+          {
+            "name": "childrenAges",
+            "in": "query",
+            "required": false,
+            "description": "Ages of children traveling, e.g. [6, 9].",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 17
+              },
+              "maxItems": 8
+            }
+          },
+          {
+            "name": "maxPricePerNight",
+            "in": "query",
+            "required": false,
+            "description": "Lodging budget per night for the whole party, in USD.",
+            "schema": {
+              "type": "number",
+              "minimum": 20,
+              "maximum": 20000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trip/lodging": {
+      "get": {
+        "operationId": "find_lodging",
+        "summary": "Find places to stay",
+        "description": "Places to stay near a ski or beach resort (or any 'lat,lon') for given dates and party: live nightly prices, ratings and photos where available, filtered by budget, homes from local property managers booked direct (no booking-site fee) where Veabird has them, plus hotel and vacation-rental searches.",
+        "parameters": [
+          {
+            "name": "near",
+            "in": "query",
+            "required": true,
+            "description": "Ski or beach resort name/id, or 'lat,lon'.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Breckenridge"
+          },
+          {
+            "name": "checkin",
+            "in": "query",
+            "required": true,
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "example": "2027-01-15"
+          },
+          {
+            "name": "checkout",
+            "in": "query",
+            "required": true,
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "example": "2027-01-18"
+          },
+          {
+            "name": "adults",
+            "in": "query",
+            "required": false,
+            "description": "Adults (default 2).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16
+            }
+          },
+          {
+            "name": "childrenAges",
+            "in": "query",
+            "required": false,
+            "description": "Ages of children traveling, e.g. [6, 9].",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 17
+              },
+              "maxItems": 8
+            }
+          },
+          {
+            "name": "rooms",
+            "in": "query",
+            "required": false,
+            "description": "Rooms needed (default 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            }
+          },
+          {
+            "name": "maxPricePerNight",
+            "in": "query",
+            "required": false,
+            "description": "Lodging budget per night for the whole party, in USD.",
+            "schema": {
+              "type": "number",
+              "minimum": 20,
+              "maximum": 20000
+            }
+          },
+          {
+            "name": "radiusMiles",
+            "in": "query",
+            "required": false,
+            "description": "Search radius (default 5).",
+            "schema": {
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 30
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trip/flights": {
+      "get": {
+        "operationId": "find_flights",
+        "summary": "Flight searches to a resort",
+        "description": "Pre-filled flight searches from the traveler's home airport to the best gateway airports for a ski or beach resort (or any airport code), with the drive from each airport to the resort.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "description": "Traveler's home airport code (e.g. DFW), city (e.g. 'Dallas') or 'lat,lon'.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "DFW"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "description": "Ski or beach resort name/id, or a destination airport code.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Breckenridge"
+          },
+          {
+            "name": "depart",
+            "in": "query",
+            "required": true,
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "example": "2027-01-15"
+          },
+          {
+            "name": "return",
+            "in": "query",
+            "required": false,
+            "description": "Return date (optional for one-way).",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "adults",
+            "in": "query",
+            "required": false,
+            "description": "Adults (default 2).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16
+            }
+          },
+          {
+            "name": "childrenAges",
+            "in": "query",
+            "required": false,
+            "description": "Ages of children traveling, e.g. [6, 9].",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 17
+              },
+              "maxItems": 8
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/host/demand": {
+      "get": {
+        "operationId": "property_demand",
+        "summary": "Demand and pricing check for a rental property",
+        "description": "For a vacation rental or hotel owner: how busy each night will be around their property for the next weeks (concerts, festivals, carnivals, conventions, pro and college home games, public holidays and long weekends, weekends), compared with a typical night there. With their calendar's iCal export link (Airbnb, Vrbo, Booking.com, Hostaway, Guesty, OwnerRez...) it marks booked and open nights; with their nightly rate it flags nights priced too low for the demand and suggests a range. Use when a host asks whether their price is too low, what's happening in town, or when to raise rates.",
+        "parameters": [
+          {
+            "name": "location",
+            "in": "query",
+            "required": true,
+            "description": "Where the property is: 'lat,lon' (most precise), a town with state or country ('Destin, FL', 'Tulum'), or a Veabird beach resort name.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Destin, FL"
+          },
+          {
+            "name": "ical",
+            "in": "query",
+            "required": false,
+            "description": "The listing's calendar export (iCal, .ics) link. Airbnb: Calendar > Availability > Connect calendars > Export. Vrbo: Calendar > Import/Export > Export. Read once, never stored.",
+            "schema": {
+              "type": "string",
+              "maxLength": 1000
+            }
+          },
+          {
+            "name": "rate",
+            "in": "query",
+            "required": false,
+            "description": "The property's normal nightly rate (USD or local currency).",
+            "schema": {
+              "type": "number",
+              "minimum": 10,
+              "maximum": 100000
+            }
+          },
+          {
+            "name": "rates",
+            "in": "query",
+            "required": false,
+            "description": "Current nightly rates for specific dates, e.g. ['2026-10-17=189','2026-10-18=189'].",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "maxItems": 120,
+              "items": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}=\\d+(\\.\\d+)?$",
+                "description": "YYYY-MM-DD=price"
+              }
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "First night, YYYY-MM-DD (default today).",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "description": "Nights to check (default 35; events are listed about 5 weeks ahead, holidays further).",
+            "schema": {
+              "type": "integer",
+              "minimum": 7,
+              "maximum": 60
+            }
+          },
+          {
+            "name": "radiusMiles",
+            "in": "query",
+            "required": false,
+            "description": "How far an event still sends guests to this property (default 25; use ~10 in a big city, 40+ for a remote area).",
+            "schema": {
+              "type": "number",
+              "minimum": 2,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result (JSON). Errors come back as {error}.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

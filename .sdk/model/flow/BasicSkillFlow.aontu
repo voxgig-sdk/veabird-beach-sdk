@@ -1,0 +1,28 @@
+# BasicSkillFlow
+
+main: kit: flow: BasicSkillFlow:
+{
+  entity: "skill",
+  kind: "basic",
+  name: "BasicSkillFlow",
+  step: [
+    {
+      i: {
+        ref: "skill_ref01",
+        srcdatavar: "skill_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-skill_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicSkillFlow"
+}

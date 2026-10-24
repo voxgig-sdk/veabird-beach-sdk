@@ -1,0 +1,32 @@
+{
+  "existing": {
+    "resort": {
+      "RESORT00": {
+        "id": "RESORT00"
+      },
+      "RESORT01": {
+        "id": "RESORT01"
+      },
+      "RESORT02": {
+        "id": "RESORT02"
+      }
+    }
+  },
+  "new": {
+    "resort": {
+      "resort_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/resorts": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /ski/resorts": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

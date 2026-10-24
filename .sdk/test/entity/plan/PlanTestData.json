@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "plan": {
+      "PLAN00": {
+        "id": "PLAN00"
+      },
+      "PLAN01": {
+        "id": "PLAN01"
+      },
+      "PLAN02": {
+        "id": "PLAN02"
+      }
+    }
+  },
+  "new": {
+    "plan": {
+      "plan_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /trip/plan": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

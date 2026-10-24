@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "rank": {
+      "RANK00": {
+        "id": "RANK00"
+      },
+      "RANK01": {
+        "id": "RANK01"
+      },
+      "RANK02": {
+        "id": "RANK02"
+      }
+    }
+  },
+  "new": {
+    "rank": {
+      "rank_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/rank": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

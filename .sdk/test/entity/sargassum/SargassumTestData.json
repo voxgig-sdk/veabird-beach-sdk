@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "sargassum": {
+      "SARGASSUM00": {
+        "id": "SARGASSUM00"
+      },
+      "SARGASSUM01": {
+        "id": "SARGASSUM01"
+      },
+      "SARGASSUM02": {
+        "id": "SARGASSUM02"
+      }
+    }
+  },
+  "new": {
+    "sargassum": {
+      "sargassum_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/sargassum": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

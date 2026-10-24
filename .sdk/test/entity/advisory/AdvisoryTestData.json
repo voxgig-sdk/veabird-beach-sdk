@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "advisory": {
+      "ADVISORY00": {
+        "id": "ADVISORY00"
+      },
+      "ADVISORY01": {
+        "id": "ADVISORY01"
+      },
+      "ADVISORY02": {
+        "id": "ADVISORY02"
+      }
+    }
+  },
+  "new": {
+    "advisory": {
+      "advisory_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/advisory": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

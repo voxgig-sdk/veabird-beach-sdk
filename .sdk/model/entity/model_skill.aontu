@@ -1,0 +1,46 @@
+# Entity: model_skill
+
+main: kit: entity: model_skill: {
+
+  alias: field: {}
+
+  name: "model_skill"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /beach/model-skill"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/beach/model-skill"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "beach"
+            }
+            {
+              lit: "model-skill"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

@@ -1,0 +1,28 @@
+# BasicOutlookFlow
+
+main: kit: flow: BasicOutlookFlow:
+{
+  entity: "outlook",
+  kind: "basic",
+  name: "BasicOutlookFlow",
+  step: [
+    {
+      i: {
+        ref: "outlook_ref01",
+        srcdatavar: "outlook_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-outlook_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicOutlookFlow"
+}

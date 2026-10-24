@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "outlook": {
+      "OUTLOOK00": {
+        "id": "OUTLOOK00"
+      },
+      "OUTLOOK01": {
+        "id": "OUTLOOK01"
+      },
+      "OUTLOOK02": {
+        "id": "OUTLOOK02"
+      }
+    }
+  },
+  "new": {
+    "outlook": {
+      "outlook_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /weather/outlook": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

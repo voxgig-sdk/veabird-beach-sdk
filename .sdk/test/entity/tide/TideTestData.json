@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "tide": {
+      "TIDE00": {
+        "id": "TIDE00"
+      },
+      "TIDE01": {
+        "id": "TIDE01"
+      },
+      "TIDE02": {
+        "id": "TIDE02"
+      }
+    }
+  },
+  "new": {
+    "tide": {
+      "tide_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /beach/tides": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

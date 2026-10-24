@@ -1,0 +1,105 @@
+# Entity: demand
+
+main: kit: entity: demand: {
+
+  alias: field: {}
+
+  name: "demand"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /host/demand"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                k: "query"
+                n: "day"
+                or: "days"
+                r: false
+                t: "`$INTEGER`"
+              }
+              {
+                k: "query"
+                n: "from"
+                or: "from"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "ical"
+                or: "ical"
+                r: false
+                t: "`$STRING`"
+              }
+              {
+                ex: "Destin, FL"
+                k: "query"
+                n: "location"
+                or: "location"
+                r: true
+                t: "`$STRING`"
+              }
+              {
+                k: "query"
+                n: "radius_mile"
+                or: "radiusMiles"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                k: "query"
+                n: "rate"
+                or: "rate"
+                r: false
+                t: "`$NUMBER`"
+              }
+              {
+                k: "query"
+                n: "rate"
+                or: "rates"
+                r: false
+                t: "`$ARRAY`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/host/demand"
+          q: {
+            exist: [
+              "location"
+            ]
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "host"
+            }
+            {
+              lit: "demand"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

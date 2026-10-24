@@ -1,0 +1,28 @@
+# BasicResortFlow
+
+main: kit: flow: BasicResortFlow:
+{
+  entity: "resort",
+  kind: "basic",
+  name: "BasicResortFlow",
+  step: [
+    {
+      i: {
+        ref: "resort_ref01",
+        srcdatavar: "resort_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-resort_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicResortFlow"
+}
